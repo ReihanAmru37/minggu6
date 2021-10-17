@@ -17,7 +17,6 @@ class StudentController extends Controller
         $students = Student::all();
         return view('students.index',['student'=>$students]);
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -27,7 +26,6 @@ class StudentController extends Controller
     {
         return view('students.create');
     }
-
     /**
      * Store a newly created resource in storage.
      *
