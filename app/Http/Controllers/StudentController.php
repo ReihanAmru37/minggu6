@@ -52,12 +52,8 @@ class StudentController extends Controller
      */
     public function show($id)
     {
-<<<<<<< HEAD
         $student = Student::find($id);
         return view('students.show',['student'=>$student]);
-=======
-        //
->>>>>>> 0d568f69da9c15202b240aeeb9206a3c575e6100
     }
 
     /**
@@ -95,7 +91,7 @@ class StudentController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Respons
      */
     public function destroy($id)
     {
@@ -103,13 +99,11 @@ class StudentController extends Controller
         $student->delete();
         return redirect()->route('students.index');
     }
-<<<<<<< HEAD
+
     public function search(Request $request)
     {
         $keyword = $request->search;
         $student = student::where('name', 'like', "%" . $keyword . "%")->paginate(5);
         return view('students.index', compact('student'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
-=======
->>>>>>> 0d568f69da9c15202b240aeeb9206a3c575e6100
 }
