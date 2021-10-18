@@ -1,11 +1,7 @@
-<?php
-
-namespace App\Http\Controllers;
+<?php namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-
-
 
 class UserController extends Controller
 {
@@ -18,7 +14,6 @@ class UserController extends Controller
     {
         $users = User::all();
         return view('users.index',['user'=>$users]);
-
     }
 
     /**
@@ -29,7 +24,6 @@ class UserController extends Controller
     public function create()
     {
         return view('users.create');
-
     }
 
     /**
@@ -45,7 +39,6 @@ class UserController extends Controller
         // if true, redirect to index
         return redirect()->route('users.index')
         ->with('success', 'Add data success!');
-
     }
 
     /**
