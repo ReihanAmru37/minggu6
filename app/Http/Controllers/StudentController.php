@@ -38,12 +38,22 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //add data
-        Student::create($request->all());
-
+        $student = new Student;
+        
+        $student->nim = $request->nim;
+        $student->name = $request->name;
+        $student->department = $request->department;
+        $student->phone_number = $request->phone_number;
+        
+        $kelas = new Kelas;
+        $kelas->id = $request->Kelas;
+        
+        $student->kelas()->associate($kelas);
+        $student->save();
+   
         // if true, redirect to index
-        return redirect()->route('students.index')
-        ->with('success', 'Add data success!');
+         return redirect()->route('students.index')
+            ->with('success', 'Add data success!');
     }
 
     /**
@@ -67,7 +77,8 @@ class StudentController extends Controller
     public function edit($id)
     {
         $student = Student::find($id);
-        return view('students.edit',['student'=>$student]);
+        $kelas = Kelas::all();
+        return view('students.edit',['student'=>$student,'kelas'=>$kelas]);
     }
 
     /**
@@ -79,14 +90,19 @@ class StudentController extends Controller
      */
     public function update(Request $request, $id)
     {
-            $student = Student::find($id);
-            $student->nim = $request->nim;
-            $student->name = $request->name;
-            $student->class = $request->class;
-            $student->department = $request->department;
-            $student->phone_number = $request->phone_number;
-            $student->save();
-            return redirect()->route('students.index');
+        $student = Student::find($id);
+        $student->nim = $request->nim;
+        $student->name = $request->name;
+        $student->department = $request->department;
+        $student->phone_number = $request->phone_number;
+    
+        $kelas = new Kelas;
+        $kelas->id = $request->Kelas;
+    
+        $student->kelas()->associate($kelas);
+        $student->save();
+            
+        return redirect()->route('students.index');
     }
 
     /**
