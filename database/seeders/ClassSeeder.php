@@ -22,8 +22,8 @@ class ClassSeeder extends Seeder
             ['class_name' => 'MI 2E',],
             ['class_name' => 'MI 2F',],
             ['class_name' => 'MI 2G',],
-        ];
+            ];
 
-        DB::table('classes')->insert($class);
+            DB::table('classes')->insert($class);
     }
 }

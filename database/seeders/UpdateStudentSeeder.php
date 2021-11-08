@@ -14,6 +14,6 @@ class UpdateStudentSeeder extends Seeder
      */
     public function run()
     {
-            DB::table('students')->update(['class_id' => 1]);
+        DB::table('students')->update(['class_id' => 1]);
     }
 }

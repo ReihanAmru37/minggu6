@@ -14,26 +14,26 @@ class StudentSeeder extends Seeder
      */
     public function run()
     {
-    DB::table('students')->insert([
-        'nim' => '2031710082',
-        'name' => 'Reihan Amru',
-        'class' => 'MI-2E',
-        'department' => 'JTI',
-        'phone_number' => '085645510533',
-    ]);
-    DB::table('students')->insert([
-        'nim' => '2031710024',
-        'name' => 'Siwi Tyas P',
-        'class' => 'MI-2E',
-        'department' => 'JTI',
-        'phone_number' => '085755060296',
-    ]);
-    DB::table('students')->insert([
-        'nim' => '2031710134',
-        'name' => 'Tegar Dwi vantoro',
-        'class' => 'MI-2E',
-        'department' => 'JTI',
-        'phone_number' => '085156850932',
-    ]);
+        DB::table('students')->insert([
+            'nim' => '2031710054', 
+            'name' => 'Diska Oktavia', 
+            'class' => 'MI-2E',
+            'department' => 'JTI', 
+            'phone_number' => '088996538919',
+        ]);
+        DB::table('students')->insert([
+            'nim' => '2031710174', 
+            'name' => 'Edo Galih Rispianto', 
+            'class' => 'MI-2E',
+            'department' => 'JTI', 
+            'phone_number' => '089655209395',
+        ]);
+        DB::table('students')->insert([
+            'nim' => '2031710012', 
+            'name' => 'Erina Seviyanti', 
+            'class' => 'MI-2E',
+            'department' => 'JTI', 
+            'phone_number' => '087739772017',
+        ]);
     }
 }

@@ -16,8 +16,8 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $student = Student::with('kelas')->get();
-        return view('students.index', ['student'=>$student]);
+        $students = Student::with('kelas')->get();
+        return view('students.index', ['student'=>$students]);
     }
 
     /**
@@ -28,7 +28,7 @@ class StudentController extends Controller
     public function create()
     {
         $kelas = Kelas::all();
-        return view('students.create',['kelas'=>$kelas]);
+        return view('students.create', ['kelas'=>$kelas]);
     }
 
     /**
@@ -40,10 +40,12 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $student = new Student;
-    
-        if($request->file('photo')){
+
+        if($request->file('photo'))
+        {
             $image_name = $request->file('photo')->store('images','public');
-    }
+        }
+
         $student->nim = $request->nim;
         $student->name = $request->name;
         $student->department = $request->department;
@@ -56,7 +58,10 @@ class StudentController extends Controller
         $student->kelas()->associate($kelas);
         $student->save();
 
-        //if true, redirect to index
+        //add data
+        // Student::create($request->all());
+
+        // if true, redirect to index
         return redirect()->route('students.index')
             ->with('success', 'Add data success!');
     }
@@ -83,7 +88,7 @@ class StudentController extends Controller
     {
         $student = Student::find($id);
         $kelas = Kelas::all();
-        return view('students.edit',['student'=>$student,'kelas'=>$kelas]);
+        return view('students.edit',['student'=>$student, 'kelas'=>$kelas]);
     }
 
     /**
@@ -100,20 +105,20 @@ class StudentController extends Controller
         $student->name = $request->name;
         $student->department = $request->department;
         $student->phone_number = $request->phone_number;
-
+        
         if($student->photo && file_exists(storage_path('app/public/'. $student->photo)))
         {
             \Storage::delete('public/'.$student->photo);
         }
         $image_name = $request->file('photo')->store('images','public');
         $student->photo = $image_name;
-    
+
         $kelas = new Kelas;
         $kelas->id = $request->Kelas;
-    
+
         $student->kelas()->associate($kelas);
         $student->save();
-            
+        
         return redirect()->route('students.index');
     }
 
@@ -121,7 +126,7 @@ class StudentController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Respons
+     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
@@ -133,9 +138,16 @@ class StudentController extends Controller
     public function search(Request $request)
     {
         $keyword = $request->search;
-        $student = student::where('name', 'like', "%" . $keyword . "%")->paginate(5);
-        return view('students.index', compact('student'))->with('i', (request()->input('page', 1) - 1) * 5);
+        $student = Student::where('name', 'like', '%' . $keyword . "%")->paginate(5);
+        return view('students.index', compact('student'))->with('i', (request()->input('page', 1) - 1) *5);
     }
+
+    public function detail($id)
+    {
+        $student = Student::find($id);
+        return view('students.detail', ['student' => $student]);
+    }
+
     public function report($id){
         $student = Student::find($id);
         $pdf = PDF::loadview('students.report',['student'=>$student]);

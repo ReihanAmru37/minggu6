@@ -17,7 +17,7 @@ class AddFkStudentsTable extends Migration
             $table->dropColumn('class');
             $table->unsignedBigInteger('class_id')->nullable()->after('nim');
             $table->foreign('class_id')->references('id')->on('classes');
-        });
+            });
     }
 
     /**

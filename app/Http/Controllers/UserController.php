@@ -1,4 +1,6 @@
-<?php namespace App\Http\Controllers;
+<?php
+
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -34,7 +36,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //add data
+        //add data 
         Student::create($request->all());
         // if true, redirect to index
         return redirect()->route('users.index')
