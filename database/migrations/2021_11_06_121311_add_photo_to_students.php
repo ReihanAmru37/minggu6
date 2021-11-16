@@ -14,7 +14,7 @@ class AddPhotoToStudents extends Migration
     public function up()
     {
         Schema::table('students', function (Blueprint $table) {
-            $table->string('photo')->after('phone_number')>nullable();
+            $table->string('photo')->after('phone_number')->nullable();
         });
     }
 

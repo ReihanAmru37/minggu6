@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
@@ -12,9 +13,13 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
+        if($request->has('cari')){
+            $users = User::where('name', 'LIKE', '%' .$request->cari. '%')->get();
+        } else {
+            $users = User::all();
+        }
         return view('users.index',['user'=>$users]);
     }
 
@@ -36,8 +41,8 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //add data 
-        Student::create($request->all());
+        //add data
+        User::create($request->all());
         // if true, redirect to index
         return redirect()->route('users.index')
         ->with('success', 'Add data success!');
@@ -51,8 +56,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
-        return view('users.show',['user'=>$user]);
+        //
     }
 
     /**
@@ -77,9 +81,8 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::find($id);
-        $user->id = $request->id;
-        $user->name = $request->name;
         $user->username = $request->username;
+        $user->name = $request->name;
         $user->email = $request->email;
         $user->password = $request->password;
         $user->save();
@@ -97,5 +100,15 @@ class UserController extends Controller
         $user = User::find($id);
         $user->delete();
         return redirect()->route('users.index');
+    }
+
+    public function __construct() 
+    { 
+        //$this->middleware('auth'); 
+        $this->middleware(function($request, $next)
+        { 
+            if(Gate::allows('manage-users')) return $next($request); 
+            abort(403, 'Anda tidak memiliki cukup hak akses'); 
+        }); 
     }
 }
